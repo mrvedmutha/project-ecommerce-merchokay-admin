@@ -1,6 +1,6 @@
-"use client"
+'use client';
 
-import * as React from "react"
+import * as React from 'react';
 import {
   Home,
   ShoppingCart,
@@ -12,207 +12,198 @@ import {
   Globe,
   BarChart3,
   Facebook,
-  Settings,
-  Store,
   Bot,
   TrendingUp,
-} from "lucide-react"
+} from 'lucide-react';
 
-import { NavMain } from "./nav-main"
-import { NavSalesChannels } from "./nav-sales-channels"
-import { NavUser } from "./nav-user"
-import { StoreSwitcher } from "./store-switcher"
+import { NavMain } from './nav-main';
+import { NavSalesChannels } from './nav-sales-channels';
+import { NavUser } from './nav-user';
+import { StoreSwitcher } from './store-switcher';
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from '@/components/ui/sidebar';
 
 const data = {
   user: {
-    name: "Admin User",
-    email: "admin@merchokay.com",
-    avatar: "/avatars/admin.jpg",
+    name: 'Admin User',
+    email: 'admin@merchokay.com',
+    avatar: '/avatars/admin.jpg',
   },
-  stores: [
-    {
-      name: "Merchokay Store",
-      logo: Store,
-      plan: "Premium",
-    },
-  ],
   navMain: [
     {
-      title: "Home",
-      url: "/dashboard",
+      title: 'Home',
+      url: '/dashboard',
       icon: Home,
       isActive: true,
     },
     {
-      title: "Orders",
-      url: "/dashboard/orders",
+      title: 'Orders',
+      url: '/dashboard/orders',
       icon: ShoppingCart,
       items: [
         {
-          title: "All Orders",
-          url: "/dashboard/orders",
+          title: 'All Orders',
+          url: '/dashboard/orders',
         },
         {
-          title: "Drafts",
-          url: "/dashboard/orders/drafts",
+          title: 'Drafts',
+          url: '/dashboard/orders/drafts',
         },
         {
-          title: "Abandoned Checkouts",
-          url: "/dashboard/orders/abandoned",
+          title: 'Abandoned Checkouts',
+          url: '/dashboard/orders/abandoned',
         },
       ],
     },
     {
-      title: "Products",
-      url: "/dashboard/products",
+      title: 'Products',
+      url: '/dashboard/products',
       icon: Package,
       items: [
         {
-          title: "All Products",
-          url: "/dashboard/products",
+          title: 'All Products',
+          url: '/dashboard/products',
         },
         {
-          title: "Collections",
-          url: "/dashboard/products/collections",
+          title: 'Collections',
+          url: '/dashboard/products/collections',
         },
         {
-          title: "Add Product",
-          url: "/dashboard/products/new",
+          title: 'Add Product',
+          url: '/dashboard/products/new',
         },
         {
-          title: "Inventory",
-          url: "/dashboard/products/inventory",
+          title: 'Inventory',
+          url: '/dashboard/products/inventory',
         },
         {
-          title: "Gift Cards",
-          url: "/dashboard/products/gift-cards",
+          title: 'Gift Cards',
+          url: '/dashboard/products/gift-cards',
         },
       ],
     },
     {
-      title: "Customers",
-      url: "/dashboard/customers",
+      title: 'Customers',
+      url: '/dashboard/customers',
       icon: Users,
       items: [
         {
-          title: "All Customers",
-          url: "/dashboard/customers",
+          title: 'All Customers',
+          url: '/dashboard/customers',
         },
         {
-          title: "Segments",
-          url: "/dashboard/customers/segments",
+          title: 'Segments',
+          url: '/dashboard/customers/segments',
         },
       ],
     },
     {
-      title: "Marketing",
-      url: "/dashboard/marketing",
+      title: 'Marketing',
+      url: '/dashboard/marketing',
       icon: Megaphone,
       items: [
         {
-          title: "Campaigns",
-          url: "/dashboard/marketing/campaigns",
+          title: 'Campaigns',
+          url: '/dashboard/marketing/campaigns',
         },
         {
-          title: "Attribution",
-          url: "/dashboard/marketing/attribution",
+          title: 'Attribution',
+          url: '/dashboard/marketing/attribution',
         },
         {
-          title: "Automations",
-          url: "/dashboard/marketing/automations",
+          title: 'Automations',
+          url: '/dashboard/marketing/automations',
         },
       ],
     },
     {
-      title: "Discounts",
-      url: "/dashboard/discounts",
+      title: 'Discounts',
+      url: '/dashboard/discounts',
       icon: Percent,
     },
     {
-      title: "Content",
-      url: "/dashboard/content",
+      title: 'Content',
+      url: '/dashboard/content',
       icon: FileText,
       items: [
         {
-          title: "Files",
-          url: "/dashboard/content/files",
+          title: 'Files',
+          url: '/dashboard/content/files',
         },
         {
-          title: "Menus",
-          url: "/dashboard/content/menus",
+          title: 'Menus',
+          url: '/dashboard/content/menus',
         },
         {
-          title: "Blog Posts",
-          url: "/dashboard/content/blog",
+          title: 'Blog Posts',
+          url: '/dashboard/content/blog',
         },
       ],
     },
     {
-      title: "Markets",
-      url: "/dashboard/markets",
+      title: 'Markets',
+      url: '/dashboard/markets',
       icon: Globe,
       items: [
         {
-          title: "Currencies",
-          url: "/dashboard/markets/currencies",
+          title: 'Currencies',
+          url: '/dashboard/markets/currencies',
         },
         {
-          title: "Collections",
-          url: "/dashboard/markets/collections",
+          title: 'Collections',
+          url: '/dashboard/markets/collections',
         },
         {
-          title: "Domains & Languages",
-          url: "/dashboard/markets/domains",
+          title: 'Domains & Languages',
+          url: '/dashboard/markets/domains',
         },
       ],
     },
     {
-      title: "Analytics",
-      url: "/dashboard/analytics",
+      title: 'Analytics',
+      url: '/dashboard/analytics',
       icon: BarChart3,
       items: [
         {
-          title: "Reports",
-          url: "/dashboard/analytics/reports",
+          title: 'Reports',
+          url: '/dashboard/analytics/reports',
         },
         {
-          title: "Live View",
-          url: "/dashboard/analytics/live",
+          title: 'Live View',
+          url: '/dashboard/analytics/live',
         },
       ],
     },
   ],
   salesChannels: [
     {
-      name: "Google",
-      url: "/dashboard/channels/google",
+      name: 'Google',
+      url: '/dashboard/channels/google',
       icon: Bot,
     },
     {
-      name: "Facebook",
-      url: "/dashboard/channels/facebook",
+      name: 'Facebook',
+      url: '/dashboard/channels/facebook',
       icon: Facebook,
     },
     {
-      name: "Microsoft Clarity",
-      url: "/dashboard/channels/clarity",
+      name: 'Microsoft Clarity',
+      url: '/dashboard/channels/clarity',
       icon: TrendingUp,
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <StoreSwitcher stores={data.stores} />
+        <StoreSwitcher />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
@@ -223,5 +214,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

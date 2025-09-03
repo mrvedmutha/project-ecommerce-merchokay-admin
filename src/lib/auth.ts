@@ -1,13 +1,20 @@
-import { betterAuth } from "better-auth"
-import { mongodbAdapter } from "better-auth/adapters/mongodb"
-import { MongoClient } from "mongodb"
+import { betterAuth } from 'better-auth';
+import { mongodbAdapter } from 'better-auth/adapters/mongodb';
+import { nextCookies } from 'better-auth/next-js';
+import { MongoClient } from 'mongodb';
 
-const client = new MongoClient(process.env.MONGODB_URI!)
+const MONGODB_URI = process.env.MONGODB_URI;
+if (!MONGODB_URI) {
+  throw new Error('MONGODB_URI environment variable is not set');
+}
+
+// Create MongoDB client and database instance
+const client = new MongoClient(MONGODB_URI);
+const db = client.db('merchokay-admin');
 
 export const auth = betterAuth({
-  database: mongodbAdapter(client, {
-    databaseName: "merchokay-admin",
-  }),
+  database: mongodbAdapter(db),
+  plugins: [nextCookies()],
   emailAndPassword: {
     enabled: true,
   },
@@ -18,24 +25,24 @@ export const auth = betterAuth({
   user: {
     additionalFields: {
       role: {
-        type: "string",
+        type: 'string',
         required: false,
-        defaultValue: "editor",
+        defaultValue: 'editor',
       },
       permissions: {
-        type: "string[]",
+        type: 'string[]',
         required: false,
         defaultValue: [],
       },
       isActive: {
-        type: "boolean",
+        type: 'boolean',
         required: false,
         defaultValue: true,
       },
       lastLogin: {
-        type: "date",
+        type: 'date',
         required: false,
       },
     },
   },
-})
+});
