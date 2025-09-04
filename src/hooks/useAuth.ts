@@ -60,13 +60,18 @@ export function useAuth() {
 
   const signIn = async (email: string, password: string) => {
     try {
+      console.log('Attempting sign in with BetterAuth client...');
+
       const result = await authClient.signIn.email({
         email,
         password,
       });
 
+      console.log('BetterAuth sign in result:', result);
+
       // Check if the result contains an error
       if (result.error) {
+        console.error('BetterAuth sign in error:', result.error);
         return { error: result.error };
       }
 
