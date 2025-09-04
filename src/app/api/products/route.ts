@@ -293,17 +293,18 @@ export async function GET(request: NextRequest) {
         bValue = new Date(b.createdAt);
     }
 
-    if (typeof aValue === 'string') {
+    if (typeof aValue === 'string' && typeof bValue === 'string') {
       return sortOrder === 'asc'
         ? aValue.localeCompare(bValue)
         : bValue.localeCompare(aValue);
-    } else if (typeof aValue === 'number') {
+    } else if (typeof aValue === 'number' && typeof bValue === 'number') {
       return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
-    } else {
+    } else if (aValue instanceof Date && bValue instanceof Date) {
       return sortOrder === 'asc'
         ? aValue.getTime() - bValue.getTime()
         : bValue.getTime() - aValue.getTime();
     }
+    return 0; // fallback
   });
 
   // Calculate total before pagination

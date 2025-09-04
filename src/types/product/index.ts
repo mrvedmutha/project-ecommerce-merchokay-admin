@@ -56,7 +56,7 @@ export interface Product {
   inventory: ProductInventory;
   dimensions?: ProductDimensions;
   seo: ProductSEO;
-  status: 'active' | 'inactive' | 'draft';
+  status: 'active' | 'draft' | 'archived';
   featured: boolean;
   tags: string[];
   vendor?: string;
