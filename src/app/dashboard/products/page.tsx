@@ -572,11 +572,42 @@ export default function ProductsPage() {
                   </TableCell>
                   <TableCell>{getStatusBadge(product.status)}</TableCell>
                   <TableCell className="text-right">
-                    <Button variant="outline" size="sm" className="gap-2">
-                      <Eye className="w-4 h-4" />
-                      Preview
-                      <ExternalLink className="w-3 h-3" />
-                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="sm" className="gap-2">
+                          <MoreHorizontal className="w-4 h-4" />
+                          Actions
+                          <ChevronDown className="w-3 h-3" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-48">
+                        <DropdownMenuItem>
+                          <Eye className="w-4 h-4 mr-2" />
+                          Preview
+                          <ExternalLink className="w-3 h-3 ml-auto" />
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Edit className="w-4 h-4 mr-2" />
+                          Edit Product
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuLabel>Change Status</DropdownMenuLabel>
+                        {product.status !== 'active' && (
+                          <DropdownMenuItem>Move to Active</DropdownMenuItem>
+                        )}
+                        {product.status !== 'draft' && (
+                          <DropdownMenuItem>Move to Draft</DropdownMenuItem>
+                        )}
+                        {product.status !== 'archived' && (
+                          <DropdownMenuItem>Move to Archive</DropdownMenuItem>
+                        )}
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="text-red-600 focus:text-red-600">
+                          <Trash2 className="w-4 h-4 mr-2" />
+                          Delete Product
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                 </TableRow>
               ))}
