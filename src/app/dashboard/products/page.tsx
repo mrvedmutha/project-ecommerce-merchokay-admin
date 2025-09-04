@@ -400,66 +400,77 @@ export default function ProductsPage() {
       {selectedProducts.length > 0 && (
         <Card className="border-blue-200 bg-blue-50">
           <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div className="text-sm text-blue-700">
-                {selectedProducts.length} product
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+              <div className="text-sm text-blue-700 text-center sm:text-left">
+                <span className="font-medium">{selectedProducts.length}</span>{' '}
+                product
                 {selectedProducts.length !== 1 ? 's' : ''} selected
               </div>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleBulkExport}
-                  className="gap-2"
-                >
-                  <Download className="w-4 h-4" />
-                  Export Selected
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleBulkEdit}
-                  className="gap-2"
-                >
-                  <Edit className="w-4 h-4" />
-                  Bulk Edit
-                </Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="gap-2">
-                      <MoreHorizontal className="w-4 h-4" />
-                      Quick Actions
-                      <ChevronDown className="w-3 h-3" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48">
-                    <DropdownMenuLabel>Change Status</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      onClick={() => handleBulkStatusChange('active')}
-                    >
-                      Set to Active
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => handleBulkStatusChange('draft')}
-                    >
-                      Set to Draft
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => handleBulkStatusChange('archived')}
-                    >
-                      Set to Archived
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      onClick={handleBulkDelete}
-                      className="text-red-600 focus:text-red-600"
-                    >
-                      <Trash2 className="w-4 h-4 mr-2" />
-                      Delete Selected
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+              <div className="flex flex-col sm:flex-row gap-2">
+                {/* Mobile: Stack buttons vertically, Desktop: Horizontal */}
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleBulkExport}
+                    className="gap-2 w-full sm:w-auto justify-center"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span className="hidden sm:inline">Export Selected</span>
+                    <span className="sm:hidden">Export</span>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleBulkEdit}
+                    className="gap-2 w-full sm:w-auto justify-center"
+                  >
+                    <Edit className="w-4 h-4" />
+                    <span className="hidden sm:inline">Bulk Edit</span>
+                    <span className="sm:hidden">Edit</span>
+                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-2 w-full sm:w-auto justify-center"
+                      >
+                        <MoreHorizontal className="w-4 h-4" />
+                        <span className="hidden sm:inline">Quick Actions</span>
+                        <span className="sm:hidden">Actions</span>
+                        <ChevronDown className="w-3 h-3" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-48">
+                      <DropdownMenuLabel>Change Status</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        onClick={() => handleBulkStatusChange('active')}
+                      >
+                        Set to Active
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => handleBulkStatusChange('draft')}
+                      >
+                        Set to Draft
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => handleBulkStatusChange('archived')}
+                      >
+                        Set to Archived
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        onClick={handleBulkDelete}
+                        className="text-red-600 focus:text-red-600"
+                      >
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        Delete Selected
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               </div>
             </div>
           </CardContent>
@@ -663,7 +674,7 @@ export default function ProductsPage() {
             </div>
           </div>
 
-          <Pagination className="mx-auto sm:mx-0">
+          <Pagination className="justify-center sm:justify-end">
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious
@@ -676,33 +687,85 @@ export default function ProductsPage() {
                 />
               </PaginationItem>
 
-              {Array.from({ length: Math.min(3, totalPages) }, (_, i) => {
-                const pageNum =
-                  Math.max(1, Math.min(totalPages - 2, currentPage - 1)) + i;
-                if (pageNum > totalPages) return null;
+              {(() => {
+                const pages = [];
+                const maxVisiblePages = 5;
+                const halfVisible = Math.floor(maxVisiblePages / 2);
 
-                return (
-                  <PaginationItem
-                    key={pageNum}
-                    className="hidden sm:inline-flex"
-                  >
-                    <PaginationLink
-                      onClick={() => handlePageChange(pageNum)}
-                      isActive={pageNum === currentPage}
-                      className="cursor-pointer"
-                    >
-                      {pageNum}
-                    </PaginationLink>
-                  </PaginationItem>
-                );
-              })}
+                let startPage = Math.max(1, currentPage - halfVisible);
+                let endPage = Math.min(totalPages, currentPage + halfVisible);
 
-              {/* Mobile: Show current page */}
-              <PaginationItem className="sm:hidden">
-                <PaginationLink isActive className="cursor-default">
-                  {currentPage} of {totalPages}
-                </PaginationLink>
-              </PaginationItem>
+                // Adjust if we're near the beginning or end
+                if (currentPage <= halfVisible) {
+                  endPage = Math.min(totalPages, maxVisiblePages);
+                }
+                if (currentPage > totalPages - halfVisible) {
+                  startPage = Math.max(1, totalPages - maxVisiblePages + 1);
+                }
+
+                // Add first page and ellipsis if needed
+                if (startPage > 1) {
+                  pages.push(
+                    <PaginationItem key={1}>
+                      <PaginationLink
+                        onClick={() => handlePageChange(1)}
+                        className="cursor-pointer"
+                      >
+                        1
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                  if (startPage > 2) {
+                    pages.push(
+                      <PaginationItem key="ellipsis-start">
+                        <span className="px-3 py-2 text-sm text-muted-foreground">
+                          ...
+                        </span>
+                      </PaginationItem>
+                    );
+                  }
+                }
+
+                // Add visible page numbers
+                for (let pageNum = startPage; pageNum <= endPage; pageNum++) {
+                  pages.push(
+                    <PaginationItem key={pageNum}>
+                      <PaginationLink
+                        onClick={() => handlePageChange(pageNum)}
+                        isActive={pageNum === currentPage}
+                        className="cursor-pointer"
+                      >
+                        {pageNum}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                }
+
+                // Add ellipsis and last page if needed
+                if (endPage < totalPages) {
+                  if (endPage < totalPages - 1) {
+                    pages.push(
+                      <PaginationItem key="ellipsis-end">
+                        <span className="px-3 py-2 text-sm text-muted-foreground">
+                          ...
+                        </span>
+                      </PaginationItem>
+                    );
+                  }
+                  pages.push(
+                    <PaginationItem key={totalPages}>
+                      <PaginationLink
+                        onClick={() => handlePageChange(totalPages)}
+                        className="cursor-pointer"
+                      >
+                        {totalPages}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                }
+
+                return pages;
+              })()}
 
               <PaginationItem>
                 <PaginationNext
