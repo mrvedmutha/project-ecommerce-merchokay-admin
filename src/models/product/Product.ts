@@ -116,7 +116,11 @@ const ProductSchema = new Schema<IProduct>(
     variants: [
       {
         name: { type: String, required: true },
-        type: { type: String, enum: ['color', 'size', 'material', 'style'], required: true },
+        type: {
+          type: String,
+          enum: ['color', 'size', 'material', 'style'],
+          required: true,
+        },
         values: [{ type: String, required: true }],
         price: { type: Number },
         inventory: { type: Number },
@@ -175,4 +179,5 @@ ProductSchema.index({ 'seo.slug': 1 });
 ProductSchema.index({ featured: 1 });
 ProductSchema.index({ tags: 1 });
 
-export const Product = mongoose.models.Product || mongoose.model<IProduct>('Product', ProductSchema);
+export const Product =
+  mongoose.models.Product || mongoose.model<IProduct>('Product', ProductSchema);
