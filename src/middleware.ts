@@ -4,14 +4,19 @@ import { getSessionCookie } from 'better-auth/cookies';
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Skip middleware for public routes
+  // Check for session cookie (optimistic check)
+  const sessionCookie = getSessionCookie(request);
+
+  // Handle auth routes when user is already authenticated
+  if (sessionCookie && pathname === '/login') {
+    return NextResponse.redirect(new URL('/dashboard', request.url));
+  }
+
+  // Skip middleware for public routes (root and login when not authenticated)
   const publicRoutes = ['/', '/login'];
   if (publicRoutes.includes(pathname)) {
     return NextResponse.next();
   }
-
-  // Check for session cookie (optimistic check)
-  const sessionCookie = getSessionCookie(request);
 
   if (!sessionCookie) {
     // Redirect to login if no session cookie found
