@@ -1,6 +1,6 @@
 import dbConnect from '@/lib/database';
 import { User } from '@/models/User';
-import { Product } from '@/models/Product';
+import { Product } from '@/models/product/Product';
 import { Customer } from '@/models/Customer';
 import bcrypt from 'bcryptjs';
 
@@ -57,7 +57,8 @@ const seedDatabase = async () => {
         seo: {
           slug: 'premium-cotton-t-shirt',
           metaTitle: 'Premium Cotton T-Shirt - Comfortable & Stylish',
-          metaDescription: 'Shop our premium cotton t-shirt, perfect for casual wear',
+          metaDescription:
+            'Shop our premium cotton t-shirt, perfect for casual wear',
         },
         status: 'active',
         featured: true,
@@ -92,7 +93,8 @@ const seedDatabase = async () => {
         seo: {
           slug: 'wireless-bluetooth-headphones',
           metaTitle: 'Wireless Bluetooth Headphones - Premium Audio',
-          metaDescription: 'Experience premium audio with our wireless headphones',
+          metaDescription:
+            'Experience premium audio with our wireless headphones',
         },
         status: 'active',
         featured: false,
